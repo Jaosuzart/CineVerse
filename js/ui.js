@@ -4,7 +4,6 @@ const ui = {
     if (v >= 7) {
       return `<span class="badge bg-success"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else if (v >= 5) {
-      // CORREÇÃO ACESSIBILIDADE: Texto escuro (text-dark) sobre fundo laranja melhora o contraste
       return `<span class="badge text-dark" style="background-color:#E8650A;"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else {
       return `<span class="badge bg-danger"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
@@ -168,9 +167,8 @@ const ui = {
     const $dots = $('#hero-dots').empty();
     const maxDots = Math.min(items.length, 5);
     for (let i = 0; i < maxDots; i++) {
-      // CORREÇÃO ACESSIBILIDADE: Borda transparente para aumentar a área de clique sem afetar o layout
       const $dot = $('<button>')
-        .addClass(`rounded-circle p-0 mx-1 border-0 ${i === 0 ? 'bg-warning' : 'bg-secondary'}`)
+        .addClass(`rounded-circle p-0 mx-1 ${i === 0 ? 'bg-warning' : 'bg-secondary'}`)
         .css({ 
           width: '10px', 
           height: '10px', 
@@ -385,7 +383,6 @@ const ui = {
     for (let p = start; p <= end; p++) {
       $('<li>')
         .addClass(`page-item ${p === current ? 'active' : ''}`)
-        // CORREÇÃO ACESSIBILIDADE: Adicionado px-3 e py-2 para aumentar a área de toque em dispositivos mobile
         .html(`<button class="page-link bg-dark text-white border-secondary px-3 py-2" data-page="${p}">${p}</button>`)
         .on('click', function () {
           app.state.page = parseInt($(this).find('button').data('page'));
