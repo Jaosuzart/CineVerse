@@ -7,3 +7,6 @@ js/config.js
 # Arquivos de sistema
 .DS_Store
 Thumbs.db
+
+.vercel
+.env*.local

@@ -1,16 +1,17 @@
-const TMDB_BASE  = 'https://api.themoviedb.org/3';
+const IMG_BASE  = 'https://image.tmdb.org/t/p';
 const tmdb = axios.create({
-  baseURL: '/api/tmdb',
   timeout: 10000,
 });
 
 
-tmdb.interceptors.response.use(config =>{
+tmdb.interceptors.request.use(config =>{
 config.params = {
 ... config.params,
 path: config.url
 };
-config.url = '';
+config.baseURL = ''; 
+  config.url = '/api/tmdb';
+
   return config;
 });
 tmdb.interceptors.response.use(
