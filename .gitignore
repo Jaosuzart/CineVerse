@@ -1,0 +1,9 @@
+# Dependências
+node_modules/
+
+# Chave de API real — nunca commitar isso!
+js/config.js
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
