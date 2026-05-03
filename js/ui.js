@@ -56,7 +56,7 @@ const ui = {
       const type    = item.media_type || (category === 'tv' ? 'tv' : 'movie');
       const title   = item.title || item.name;
       const date    = item.release_date || item.first_air_date;
-      const poster  = api.posterUrl(item.poster_path, 'w-185');
+      const poster  = api.posterUrl(item.poster_path, 'w185');
 
       const $article = $('<article>').addClass('col');
       const $card = $('<div>')
@@ -79,9 +79,14 @@ const ui = {
         });
 
       const $img = $('<img>')
-        .addClass('card-img-top object-fit-cover')
-        .attr({ src: poster, alt: title, loading: 'lazy' })
-        .css({ height: '280px' });
+        .addClass('card-img-top card-poster')
+        .attr({ 
+          src: poster, 
+          alt: title, 
+          loading: 'lazy',
+          width: '185',
+          height: '278'
+        });
 
       const $badge = $('<span>')
         .addClass(`badge position-absolute top-0 start-0 m-2 ${type === 'tv' ? 'bg-info text-dark' : 'bg-warning text-dark'}`)
@@ -94,15 +99,7 @@ const ui = {
 
       const overview = item.overview || 'Sinopse não disponível.';
       const $overview = $('<p>')
-        .addClass('card-text text-body-secondary mb-2')
-        .css({
-          fontSize           : '.75rem',
-          lineHeight         : '1.4',
-          overflow           : 'hidden',
-          display            : '-webkit-box',
-          '-webkit-line-clamp': '3',
-          '-webkit-box-orient': 'vertical',
-        })
+        .addClass('card-text text-body-secondary mb-2 card-overview')
         .text(overview);
 
       const $meta = $('<p>').addClass('card-text small text-body-secondary mt-auto mb-0 d-flex justify-content-between');
@@ -138,6 +135,15 @@ const ui = {
       const date  = item.release_date || item.first_air_date;
       const bg    = api.backdropUrl(item.backdrop_path);
 
+      if (current === 0 && !document.getElementById('lcp-preload') && bg) {
+      const $preload = $('<link>')
+        .attr('id', 'lcp-preload')
+        .attr('rel', 'preload')
+        .attr('as', 'image')
+        .attr('href', bg)
+        .attr('fetchpriority', 'high');
+      $('head').append($preload);
+    }
       const $heroBg = $('#hero-bg');
       if (animate) {
         $heroBg.fadeOut(200, function () {
@@ -169,14 +175,6 @@ const ui = {
     for (let i = 0; i < maxDots; i++) {
       const $dot = $('<button>')
         .addClass(`rounded-circle p-0 mx-1 ${i === 0 ? 'bg-warning' : 'bg-secondary'}`)
-        .css({ 
-          width: '10px', 
-          height: '10px', 
-          border: '12px solid transparent', 
-          backgroundClip: 'padding-box',
-          boxSizing: 'content-box',
-          transition: 'background-color 0.3s'
-        })
         .attr('aria-label', `Ir para slide ${i + 1}`)
         .on('click', () => {
           current = i;
@@ -276,7 +274,6 @@ const ui = {
         const photo = api.posterUrl(actor.profile_path, 'w92');
         $('<figure>')
           .addClass('text-center mb-0')
-          .css({ width: '80px' })
           .html(`
             <img src="${photo}" alt="${actor.name}"
               class="rounded-circle mb-1 object-fit-cover border border-secondary"

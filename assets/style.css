@@ -1,0 +1,20 @@
+
+#cards-grid {
+    min-height: 800px;
+}
+
+.card-poster {
+    width: 100%;
+    aspect-ratio: 2 / 3; 
+    object-fit: cover;
+    background-color: #212529; 
+}
+
+.card-overview {
+    font-size: .75rem;
+    line-height: 1.4;
+    overflow: hidden;
+    display: -webkit-box;
+    --webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
