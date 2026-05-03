@@ -4,7 +4,8 @@ const ui = {
     if (v >= 7) {
       return `<span class="badge bg-success"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else if (v >= 5) {
-      return `<span class="badge" style="background-color:#E8650A;color:#fff;"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
+      // CORREÇÃO ACESSIBILIDADE: Texto escuro (text-dark) sobre fundo laranja melhora o contraste
+      return `<span class="badge text-dark" style="background-color:#E8650A;"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else {
       return `<span class="badge bg-danger"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     }
@@ -20,7 +21,6 @@ const ui = {
     const m = min % 60;
     return h ? `${h}h ${m}m` : `${m}m`;
   },
-
 
   showSkeletons() {
     const skeletons = Array.from({ length: 10 }, () => `
@@ -41,13 +41,6 @@ const ui = {
     $('#empty-state').addClass('d-none');
   },
 
-
-  /**
-   * Renderiza lista de títulos no grid principal.
-   * Usa jQuery para construção e binding de eventos.
-   * @param {Array}  items     - array de objetos do TMDB
-   * @param {'movie'|'tv'|'trending'} category
-   */
   renderCards(items, category) {
     const $grid = $('#cards-grid').empty();
 
@@ -175,15 +168,23 @@ const ui = {
     const $dots = $('#hero-dots').empty();
     const maxDots = Math.min(items.length, 5);
     for (let i = 0; i < maxDots; i++) {
+      // CORREÇÃO ACESSIBILIDADE: Borda transparente para aumentar a área de clique sem afetar o layout
       const $dot = $('<button>')
-        .addClass(`btn btn-sm ${i === 0 ? 'btn-warning' : 'btn-outline-light'} rounded-circle p-1 mx-1`)
-        .css({ width: '10px', height: '10px', padding: '0' })
+        .addClass(`rounded-circle p-0 mx-1 border-0 ${i === 0 ? 'bg-warning' : 'bg-secondary'}`)
+        .css({ 
+          width: '10px', 
+          height: '10px', 
+          border: '12px solid transparent', 
+          backgroundClip: 'padding-box',
+          boxSizing: 'content-box',
+          transition: 'background-color 0.3s'
+        })
         .attr('aria-label', `Ir para slide ${i + 1}`)
         .on('click', () => {
           current = i;
           update(items[i], true);
-          $dots.find('button').removeClass('btn-warning').addClass('btn-outline-light');
-          $dot.removeClass('btn-outline-light').addClass('btn-warning');
+          $dots.find('button').removeClass('bg-warning').addClass('bg-secondary');
+          $dot.removeClass('bg-secondary').addClass('bg-warning');
           resetInterval();
         });
       $dots.append($dot);
@@ -197,13 +198,12 @@ const ui = {
         current = (current + 1) % maxDots;
         update(items[current], true);
         $dots.find('button').eq(current)
-          .removeClass('btn-outline-light').addClass('btn-warning')
-          .siblings().removeClass('btn-warning').addClass('btn-outline-light');
+          .removeClass('bg-secondary').addClass('bg-warning')
+          .siblings().removeClass('bg-warning').addClass('bg-secondary');
       }, 6000);
     };
     resetInterval();
   },
-
 
   renderGenres(genres) {
     const $container = $('#genre-filters');
@@ -224,7 +224,6 @@ const ui = {
         .appendTo($container);
     });
   },
-
 
   renderModal({ details, credits, videos, similar }, type) {
     const title   = details.title || details.name;
@@ -268,7 +267,6 @@ const ui = {
         .appendTo($stats);
     });
 
-  
     $('#modal-overview').addClass('text-body-secondary').text(details.overview || 'Sinopse não disponível.');
 
     const $cast = $('#modal-cast').empty();
@@ -309,11 +307,8 @@ const ui = {
           + `?vq=hd2160&hd=1&rel=0&modestbranding=1`;
 
         const $col = $('<div>').addClass('col-12 col-md-6 col-xl-4');
-
         const $figure = $('<figure>').addClass('mb-0');
-
-        const $iframeWrapper = $('<div>')
-          .addClass('ratio ratio-16x9 rounded overflow-hidden shadow');
+        const $iframeWrapper = $('<div>').addClass('ratio ratio-16x9 rounded overflow-hidden shadow');
 
         const $iframe = $('<iframe>')
           .attr({
@@ -376,10 +371,9 @@ const ui = {
     }
   },
 
-
   renderPagination(current, total) {
     const $pages = $('#page-numbers').empty();
-    const maxPages = Math.min(total, 500); // TMDB limita a 500 páginas
+    const maxPages = Math.min(total, 500);
 
     $('#prev-btn').prop('disabled', current <= 1);
     $('#next-btn').prop('disabled', current >= maxPages);
@@ -391,7 +385,8 @@ const ui = {
     for (let p = start; p <= end; p++) {
       $('<li>')
         .addClass(`page-item ${p === current ? 'active' : ''}`)
-        .html(`<button class="page-link bg-dark text-white border-secondary" data-page="${p}">${p}</button>`)
+        // CORREÇÃO ACESSIBILIDADE: Adicionado px-3 e py-2 para aumentar a área de toque em dispositivos mobile
+        .html(`<button class="page-link bg-dark text-white border-secondary px-3 py-2" data-page="${p}">${p}</button>`)
         .on('click', function () {
           app.state.page = parseInt($(this).find('button').data('page'));
           app.fetchContent();
@@ -399,7 +394,6 @@ const ui = {
         .appendTo($pages);
     }
   },
-
 
   toast(message, type = 'success') {
     $('#toast-container').remove();
@@ -425,7 +419,6 @@ const ui = {
     $('body').append($toast);
     setTimeout(() => $toast.fadeOut(400, () => $toast.remove()), 3500);
   },
-
 
   setSectionTitle(category, query = '') {
     const titles = {

@@ -89,7 +89,7 @@
         <article id="hero-content" class="col-lg-6">
           <span class="badge bg-warning text-dark mb-3 fs-6" id="hero-badge">Em Alta</span>
           <h1 class="display-5 fw-bold text-white" id="hero-title">Carregando…</h1>
-          <p class="text-body-secondary" id="hero-overview" style="max-width:520px;"></p>
+          <p class="text-body-secondary" id="hero-overview" style="max-width:520px; min-height: 72px;"></p>
 
           <ul class="list-inline mb-4" id="hero-meta"></ul>
 
@@ -123,7 +123,8 @@
         </nav>
 
         <label class="d-flex align-items-center gap-2 text-body-secondary small" for="sort-select">
-          <i class="bi bi-sort-down"></i>
+          <span class="visually-hidden">Ordenar resultados por:</span>
+          <i class="bi bi-sort-down" aria-hidden="true"></i>
           <select
             class="form-select form-select-sm bg-secondary-subtle text-body border-secondary"
             id="sort-select">
@@ -158,7 +159,7 @@
 
         <nav class="d-flex justify-content-center align-items-center gap-2 mt-5"
           id="pagination" aria-label="Paginação">
-          <button class="btn btn-outline-warning btn-sm" id="prev-btn" disabled>
+          <button class="btn btn-outline-warning btn-sm px-3 py-2" id="prev-btn" disabled>
             <i class="bi bi-chevron-left"></i> Anterior
           </button>
           <ul class="pagination pagination-sm mb-0" id="page-numbers"></ul>
@@ -177,15 +178,14 @@
     <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered">
       <article class="modal-content bg-body-tertiary text-body border border-secondary-subtle">
 
-        <!-- Hero do modal -->
         <header class="position-relative overflow-hidden rounded-top" style="min-height:260px;">
           <img id="modal-backdrop" src="" alt="Backdrop"
             class="w-100 object-fit-cover"
             style="height:260px; opacity:.5;" />
           <div class="position-absolute bottom-0 start-0 w-100 p-4 d-flex align-items-end gap-4"
             style="background:linear-gradient(to top, var(--bs-body-tertiary-bg, #2b3035) 55%, transparent);">
-            <img id="modal-poster" src="" alt="Poster"
-              class="rounded shadow border border-secondary" style="width:100px; flex-shrink:0;" />
+            <img id="modal-poster" src="" alt="Capa do Filme"
+              class="rounded shadow border border-secondary" width="100" height="150" style="flex-shrink:0;object-fit: cover;"/>
             <div>
               <h2 class="modal-title h4 fw-bold mb-1 text-white" id="modal-title"></h2>
               <div id="modal-badges" class="d-flex flex-wrap gap-2"></div>
@@ -236,7 +236,7 @@
       Dados fornecidos pela
       <a href="https://www.themoviedb.org" target="_blank" rel="noopener"
         class="text-warning text-decoration-none fw-semibold">TMDB</a>
-      &middot; Projeto feito &amp; por João Marcelo, estudante de técnico em desenvolvimento de sistemas.
+      &middot; Projeto feito por João Marcelo, estudante de técnico em desenvolvimento de sistemas.
     </small>
   </footer>
 
