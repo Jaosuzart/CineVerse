@@ -87,12 +87,12 @@ const ui = {
           width: '185',
           height: '278'
         });
-
+         const $posterWrapper = $('<div>').addClass('card-poster-wrapper').append($img);
       const $badge = $('<span>')
         .addClass(`badge position-absolute top-0 start-0 m-2 ${type === 'tv' ? 'bg-info text-dark' : 'bg-warning text-dark'}`)
         .text(type === 'tv' ? 'Série' : 'Filme');
 
-      const $imgWrapper = $('<div>').addClass('position-relative').append($img, $badge);
+      const $imgWrapper = $('<div>').addClass('position-relative').append($posterWrapper, $badge);
 
       const $body  = $('<div>').addClass('card-body p-2 d-flex flex-column');
       const $title = $('<h3>').addClass('card-title h6 fw-bold mb-1 text-truncate').text(title);
@@ -151,7 +151,6 @@ const ui = {
         });
         $('#hero-title').fadeOut(150, function () { $(this).text(title).fadeIn(300); });
       } else {
-        $heroBg.css('backgroundImage', bg ? `url(${bg})` : 'none');
         $('#hero-title').text(title);
       }
 
