@@ -56,7 +56,7 @@ const ui = {
       const type    = item.media_type || (category === 'tv' ? 'tv' : 'movie');
       const title   = item.title || item.name;
       const date    = item.release_date || item.first_air_date;
-      const poster  = api.posterUrl(item.poster_path);
+      const poster  = api.posterUrl(item.poster_path, 'w-185');
 
       const $article = $('<article>').addClass('col');
       const $card = $('<div>')
