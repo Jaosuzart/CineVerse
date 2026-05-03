@@ -1,22 +1,25 @@
 const TMDB_BASE  = 'https://api.themoviedb.org/3';
-const IMG_BASE   = 'https://image.tmdb.org/t/p';
 const tmdb = axios.create({
-  baseURL: TMDB_BASE,
-  params: {
-    api_key : TMDB_KEY,
-    language: 'pt-BR',
-  },
+  baseURL: '/api/tmdb',
   timeout: 10000,
 });
 
+
+tmdb.interceptors.response.use(config =>{
+config.params = {
+... config.params,
+path: config.url
+};
+config.url = '';
+  return config;
+});
 tmdb.interceptors.response.use(
-  res  => res,
-  err  => {
+  res => res,
+  err =>{
     console.error('[TMDB API Error]', err.response?.status, err.message);
     return Promise.reject(err);
   }
-);
-
+)
 const api = {
   posterUrl  : (path, size = 'w342')  => path ? `${IMG_BASE}/${size}${path}` : 'https://placehold.co/342x513/1a1a2e/ffffff?text=Sem+Poster',
   backdropUrl: (path, size = 'w1280') => path ? `${IMG_BASE}/${size}${path}` : '',
@@ -36,9 +39,9 @@ const api = {
   getTrending(page = 1) {
     const dfd = $.Deferred();
     $.ajax({
-      url     : `${TMDB_BASE}/trending/all/week`,
+      url     : '/api/tmdb',
       method  : 'GET',
-      data    : { api_key: TMDB_KEY, language: 'pt-BR', page },
+      data    : { path: '/trending/all/week', page },
       success : data => dfd.resolve({ data }),
       error   : (_, __, err) => dfd.reject(new Error(err)),
     });
