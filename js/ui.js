@@ -43,17 +43,16 @@ const ui = {
   },
 
   renderCards(items, category) {
-    const $grid = $('#cards-grid').empty();
-
     if (!items || items.length === 0) {
      $('#cards-grid').empty();
      $('#empty-state').removeClass('d-none');
-     $('#pagination').addClass('d-none');
+
+     $('#pagination').addClass('invisible');
       return;
     }
 
     $('#empty-state').addClass('d-none');
-    $('#pagination').removeClass('d-none');
+    $('#pagination').removeClass('invisible');
 
     const novosCards = [];
 
