@@ -272,13 +272,16 @@ const ui = {
       $cast.html('<p class="text-muted small">Elenco não disponível.</p>');
     } else {
       $.each(cast, (_, actor) => {
-        const photo = api.posterUrl(actor.profile_path, 'w92');
+    const fallbackSvg = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 65 65'%3E%3Crect width='65' height='65' fill='%23343a40'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='24' fill='%23adb5bd' font-family='sans-serif'%3E?%3C/text%3E%3C/svg%3E";
+    const photo = actor.profile_path 
+          ? api.posterUrl(actor.profile_path, 'w92') 
+          : fallbackSvg;
         $('<figure>')
           .addClass('text-center mb-0')
           .html(`
             <img src="${photo}" alt="${actor.name}"
               class="rounded-circle mb-1 object-fit-cover border border-secondary" style="width: 65px; height: 65px;"
-              onerror="this.src='https://placehold.co/64x64/343a40/adb5bd?text=?'"
+              onerror="this.src='${fallbackSvg}'"
             />
             <figcaption class="small fw-semibold text-truncate" style="max-width: 80px;">${actor.name}</figcaption>
             <figcaption class="text-muted">${actor.character || ''}</figcaption>
