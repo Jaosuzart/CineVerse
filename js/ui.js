@@ -25,10 +25,10 @@ const ui = {
     const skeletons = Array.from({ length: 20 }, () => `
       <article class="col">
         <div class="card bg-secondary-subtle border-secondary h-100 placeholder-glow">
-        <div class="position: relative">
+        <div class="position-relative">
           <div class="card-poster-wrapper placeholder rounded-top"></div>
           </div>
-          <div class="card-body">
+          <div class="card-body p-2 d-flex flex-column">
             <p class="placeholder col-8 mb-2"></p>
             <p class="placeholder col-5 mb-1"></p>
             <p class="placeholder col-12"></p>
@@ -112,7 +112,7 @@ const ui = {
       $body.append($title, $overview, $meta);
       $card.append($imgWrapper, $body);
       $article.append($card);
-      novosCards.push('<article>');
+      novosCards.push($article);
     });
     $('#cards-grid').empty().append(novosCards);
   },
