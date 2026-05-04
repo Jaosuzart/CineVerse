@@ -9,4 +9,4 @@ js/config.js
 Thumbs.db
 
 .vercel
-.env*.local
+.env
