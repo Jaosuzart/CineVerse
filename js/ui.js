@@ -4,7 +4,7 @@ const ui = {
     if (v >= 7) {
       return `<span class="badge bg-success"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else if (v >= 5) {
-      return `<span class="badge text-dark"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
+      return `<span class="badge bg-warning text-dark"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else {
       return `<span class="badge bg-danger"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     }
@@ -25,7 +25,9 @@ const ui = {
     const skeletons = Array.from({ length: 10 }, () => `
       <article class="col">
         <div class="card bg-secondary-subtle border-secondary h-100 placeholder-glow">
+        <div class="position: relative">
           <div class="card-poster-wrapper placeholder rounded-top"></div>
+          </div>
           <div class="card-body">
             <p class="placeholder col-8 mb-2"></p>
             <p class="placeholder col-5 mb-1"></p>
@@ -44,13 +46,16 @@ const ui = {
     const $grid = $('#cards-grid').empty();
 
     if (!items || items.length === 0) {
-      $('#empty-state').removeClass('d-none');
-      $('#pagination').addClass('d-none');
+     $('#cards-grid').empty();
+     $('#empty-state').removeClass('d-none');
+     $('#pagination').addClass('d-none');
       return;
     }
 
     $('#empty-state').addClass('d-none');
     $('#pagination').removeClass('d-none');
+
+    const novosCards = [];
 
     $.each(items, (index, item) => {
       const type    = item.media_type || (category === 'tv' ? 'tv' : 'movie');
@@ -60,13 +65,9 @@ const ui = {
 
       const $article = $('<article>').addClass('col');
       const $card = $('<div>')
-        .addClass('card bg-secondary-subtle text-body border border-secondary h-100 shadow-sm')
-        .on('mouseleave', function () {
-          $(this).css({ transform: '' })
-                 .removeClass('border-warning');
-        })
+        .addClass('card bg-secondary-subtle text-body border border-secondary h-100 shadow-sm movie-card')
         .on('click', function () {
-          app.openDetails(item.id, type);
+         app.openDetails(item.id, type);
         })
         .attr({ 'data-id': item.id, 'data-type': type, role: 'button', tabindex: '0' })
         .on('keypress', function (e) {
@@ -112,8 +113,9 @@ const ui = {
       $body.append($title, $overview, $meta);
       $card.append($imgWrapper, $body);
       $article.append($card);
-      $grid.append($article);
+      novosCards.push('<article>');
     });
+    $('#cards-grid').empty().append(novosCards);
   },
 
   renderHero(items) {
