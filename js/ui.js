@@ -4,7 +4,7 @@ const ui = {
     if (v >= 7) {
       return `<span class="badge bg-success"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else if (v >= 5) {
-      return `<span class="badge text-dark" style="background-color:#E8650A;"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
+      return `<span class="badge text-dark"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     } else {
       return `<span class="badge bg-danger"><i class="bi bi-star-fill me-1"></i>${v}</span>`;
     }
@@ -25,7 +25,7 @@ const ui = {
     const skeletons = Array.from({ length: 10 }, () => `
       <article class="col">
         <div class="card bg-secondary-subtle border-secondary h-100 placeholder-glow">
-          <div class="placeholder rounded-top" style="height:280px;"></div>
+          <div class="card-poster-wrapper placeholder rounded-top"></div>
           <div class="card-body">
             <p class="placeholder col-8 mb-2"></p>
             <p class="placeholder col-5 mb-1"></p>
@@ -61,11 +61,6 @@ const ui = {
       const $article = $('<article>').addClass('col');
       const $card = $('<div>')
         .addClass('card bg-secondary-subtle text-body border border-secondary h-100 shadow-sm')
-        .css({ cursor: 'pointer', transition: 'transform .2s, border-color .2s' })
-        .on('mouseenter', function () {
-          $(this).css({ transform: 'translateY(-4px)' })
-                 .addClass('border-warning');
-        })
         .on('mouseleave', function () {
           $(this).css({ transform: '' })
                  .removeClass('border-warning');
@@ -282,11 +277,10 @@ const ui = {
           .html(`
             <img src="${photo}" alt="${actor.name}"
               class="rounded-circle mb-1 object-fit-cover border border-secondary"
-              style="width:64px; height:64px;"
               onerror="this.src='https://placehold.co/64x64/343a40/adb5bd?text=?'"
             />
-            <figcaption class="small fw-semibold text-truncate" style="max-width:80px;">${actor.name}</figcaption>
-            <figcaption class="text-muted" style="font-size:.7rem; max-width:80px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">${actor.character || ''}</figcaption>
+            <figcaption class="small fw-semibold text-truncate">${actor.name}</figcaption>
+            <figcaption class="text-muted">${actor.character || ''}</figcaption>
           `)
           .appendTo($cast);
       });
@@ -323,7 +317,7 @@ const ui = {
         const $caption = $('<figcaption>')
           .addClass('text-muted small mt-2 text-truncate fw-semibold')
           .attr('title', v.name)
-          .html(`<i class="bi bi-youtube text-danger me-1"></i>${v.name} <span class="badge bg-secondary ms-1" style="font-size:.65rem;">4K</span>`);
+          .html(`<i class="bi bi-youtube text-danger me-1"></i>${v.name} <span class="badge bg-secondary ms-1>4K</span>`);
 
         $iframeWrapper.append($iframe);
         $figure.append($iframeWrapper, $caption);
@@ -346,10 +340,9 @@ const ui = {
           .addClass('col')
           .html(`
             <div class="card bg-secondary border-0 h-100" role="button" tabindex="0"
-              style="cursor:pointer;"
               data-id="${item.id}" data-type="${type}">
               <img src="${sposter}" alt="${stitle}"
-                class="card-img-top object-fit-cover" style="height:150px;"
+                class="card-img-top object-fit-cover"
                 onerror="this.src='https://placehold.co/154x231/343a40/adb5bd?text=?'"
               />
               <div class="card-body p-1 text-center">
