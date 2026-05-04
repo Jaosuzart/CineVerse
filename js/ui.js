@@ -22,7 +22,7 @@ const ui = {
   },
 
   showSkeletons() {
-    const skeletons = Array.from({ length: 10 }, () => `
+    const skeletons = Array.from({ length: 20 }, () => `
       <article class="col">
         <div class="card bg-secondary-subtle border-secondary h-100 placeholder-glow">
         <div class="position: relative">
