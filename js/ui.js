@@ -52,7 +52,7 @@ const ui = {
     $('#empty-state').addClass('d-none');
     $('#pagination').removeClass('d-none');
 
-    $.each(items, (_, item) => {
+    $.each(items, (index, item) => {
       const type    = item.media_type || (category === 'tv' ? 'tv' : 'movie');
       const title   = item.title || item.name;
       const date    = item.release_date || item.first_air_date;
@@ -78,15 +78,21 @@ const ui = {
           if (e.key === 'Enter') app.openDetails(item.id, type);
         });
 
-      const $img = $('<img>')
-        .addClass('card-img-top card-poster')
-        .attr({ 
-          src: poster, 
-          alt: title, 
-          loading: 'lazy',
-          width: '185',
-          height: '278'
-        });
+      const imgAttrs = { 
+        src: poster, 
+        alt: title, 
+        width: '185',
+        height: '278'
+      };
+
+        if (index < 4) {
+        if (index === 0) {
+           imgAttrs.fetchpriority = 'high'; 
+        }
+      } else {
+        imgAttrs.loading = 'lazy';
+      }
+      const $img = $('<img>').addClass('card-img-top card-poster').attr(imgAttrs);
          const $posterWrapper = $('<div>').addClass('card-poster-wrapper').append($img);
       const $badge = $('<span>')
         .addClass(`badge position-absolute top-0 start-0 m-2 ${type === 'tv' ? 'bg-info text-dark' : 'bg-warning text-dark'}`)
