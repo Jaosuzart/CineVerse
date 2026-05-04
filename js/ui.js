@@ -277,10 +277,10 @@ const ui = {
           .addClass('text-center mb-0')
           .html(`
             <img src="${photo}" alt="${actor.name}"
-              class="rounded-circle mb-1 object-fit-cover border border-secondary"
+              class="rounded-circle mb-1 object-fit-cover border border-secondary" style="width: 65px; height: 65px;"
               onerror="this.src='https://placehold.co/64x64/343a40/adb5bd?text=?'"
             />
-            <figcaption class="small fw-semibold text-truncate">${actor.name}</figcaption>
+            <figcaption class="small fw-semibold text-truncate" style="max-width: 80px;">${actor.name}</figcaption>
             <figcaption class="text-muted">${actor.character || ''}</figcaption>
           `)
           .appendTo($cast);
